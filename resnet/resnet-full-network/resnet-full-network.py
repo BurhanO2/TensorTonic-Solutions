@@ -1,0 +1,24 @@
+import numpy as np
+
+def resnet_forward(x, conv1, W1_b1, W2_b1, W1_b2, W2_b2, Ws_b2, fc):
+    """
+    Returns the network logits as a nested list.
+    """
+    x = np.array(x, dtype=float)
+    conv1 = np.array(conv1, dtype=float)
+    fc = np.array(fc, dtype=float)
+    x = np.maximum(0, x @ conv1)
+
+    blocks = [
+        (np.array(W1_b1, dtype=float), np.array(W2_b1, dtype=float), None),
+        (np.array(W1_b2, dtype=float), np.array(W2_b2, dtype=float), np.array(Ws_b2, dtype=float)),
+    ]
+
+    for W1, W2, Ws in blocks:
+        i = x.copy()
+        if Ws is not None:
+            i = x @ Ws
+
+        x = np.maximum(0, np.maximum(0, x @ W1) @ W2 + i)
+    result = x @ fc
+    return list(x @ fc)
