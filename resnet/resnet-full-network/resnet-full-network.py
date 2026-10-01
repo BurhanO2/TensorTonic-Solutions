@@ -15,11 +15,8 @@ def resnet_forward(x, conv1, W1_b1, W2_b1, W1_b2, W2_b2, Ws_b2, fc):
     ]
 
     for W1, W2, Ws in blocks:
-        i = x.copy()
-        if Ws is not None:
-            i = x @ Ws
-
-        x = np.maximum(0, np.maximum(0, x @ W1) @ W2 + i)
+        identity = x @ Ws if Ws is not None else x
+        x = np.maximum(0, np.maximum(0, x @ W1) @ W2 + identity)
 
     result = x @ fc
     return [[round(float(v), 4) for v in row] for row in result]
