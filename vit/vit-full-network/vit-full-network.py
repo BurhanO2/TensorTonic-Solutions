@@ -28,12 +28,12 @@ def vit_forward(image: np.ndarray, patch_size: int, num_heads: int,
 
     for weights in encoder_weights:
         normalized = layer_norm(tokens)
-        head_width = tokens.shape[-1] // num_heads
-        q = (normalized @ weights["Wq"]).reshape(batch, -1, num_heads, head_width).transpose(0, 2, 1, 3)
-        k = (normalized @ weights["Wk"]).reshape(batch, -1, num_heads, head_width).transpose(0, 2, 1, 3)
-        v = (normalized @ weights["Wv"]).reshape(batch, -1, num_heads, head_width).transpose(0, 2, 1, 3)
-        scores = q @ k.transpose(0, 1, 3, 2) / np.sqrt(head_width)
-        attended = (softmax(scores) @ v).transpose(0, 2, 1, 3).reshape(batch, -1, tokens.shape[-1])
+        d_k = tokens.shape[-1] // num_heads
+        Q = (normalized @ weights["Wq"]).reshape(batch, -1, num_heads, d_k).transpose(0, 2, 1, 3)
+        K = (normalized @ weights["Wk"]).reshape(batch, -1, num_heads, d_k).transpose(0, 2, 1, 3)
+        V = (normalized @ weights["Wv"]).reshape(batch, -1, num_heads, d_k).transpose(0, 2, 1, 3)
+        scores = Q @ K.transpose(0, 1, 3, 2) / np.sqrt(d_k)
+        attended = (softmax(scores) @ V).transpose(0, 2, 1, 3).reshape(batch, -1, tokens.shape[-1])
         tokens = tokens + attended @ weights["Wo"]
         normalized = layer_norm(tokens)
         hidden = normalized @ weights["W1"]
