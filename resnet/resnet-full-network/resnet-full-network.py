@@ -20,5 +20,6 @@ def resnet_forward(x, conv1, W1_b1, W2_b1, W1_b2, W2_b2, Ws_b2, fc):
             i = x @ Ws
 
         x = np.maximum(0, np.maximum(0, x @ W1) @ W2 + i)
+
     result = x @ fc
-    return list(x @ fc)
+    return [[round(float(v), 4) for v in row] for row in result]
