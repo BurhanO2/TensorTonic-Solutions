@@ -15,14 +15,14 @@ def multi_head_attention(Q: np.ndarray, K: np.ndarray, V: np.ndarray,
     batch_size, seq_len, d_model = Q.shape
     d_k = d_model // num_heads
 
-    Q = np.dot(Q, W_q).reshape(batch_size, seq_len, num_heads, d_k).transpose(0, 2, 1, 3)
-    K = np.dot(K, W_k).reshape(batch_size, seq_len, num_heads, d_k).transpose(0, 2, 1, 3)
-    V = np.dot(V, W_v).reshape(batch_size, seq_len, num_heads, d_k).transpose(0, 2, 1, 3)
+    Q = (Q @ W_q).reshape(batch_size, seq_len, num_heads, d_k).transpose(0, 2, 1, 3)
+    K = (K @ W_k).reshape(batch_size, seq_len, num_heads, d_k).transpose(0, 2, 1, 3)
+    V = (V @ W_v).reshape(batch_size, seq_len, num_heads, d_k).transpose(0, 2, 1, 3)
 
     scores = Q @ K.transpose(0, 1, 3, 2) / np.sqrt(d_k)
-    attention_output = np.matmul(softmax(scores), V)
+    attention_output = softmax(scores) @ V
     attention_output = attention_output.transpose(0, 2, 1, 3).reshape(batch_size, seq_len, d_model)
-    return np.dot(attention_output, W_o)
+    return attention_output @ W_o
 
 def feed_forward(x: np.ndarray, W1: np.ndarray, b1: np.ndarray,
                  W2: np.ndarray, b2: np.ndarray) -> np.ndarray:
