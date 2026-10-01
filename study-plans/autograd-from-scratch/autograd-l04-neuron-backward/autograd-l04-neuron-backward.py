@@ -6,10 +6,10 @@ def neuron_backward(inputs: torch.Tensor, weights: torch.Tensor, bias: torch.Ten
     """
     x, w, b = inputs, weights, bias
     y = torch.tanh(torch.sum(x * w) + b)
-    local_gradient = upstream_gradient * (1 - y.square())
-    input_gradients = local_gradient * w
-    weight_gradients = local_gradient * x
-    bias_gradient = local_gradient
+    delta = upstream_gradient * (1 - y.square())
+    input_gradients = delta * w
+    weight_gradients = delta * x
+    bias_gradient = delta
 
     return (y, input_gradients, weight_gradients, bias_gradient)
     # x, w, b = inputs, weights, bias
