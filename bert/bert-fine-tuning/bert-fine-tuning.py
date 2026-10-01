@@ -13,12 +13,12 @@ def bert_fine_tuning_step(hidden_states: np.ndarray, labels: np.ndarray,
     z = hidden_states[:, 0, :] @ classifier_W + classifier_b
     probs = softmax(z)
     batch_size = labels.shape[0]
-    loss = -np.mean(np.log(probs[np.arange(batch_size), labels]))
     grad_z = probs.copy()
     grad_z[np.arange(batch_size), labels] -= 1.0
     grad_z /= batch_size
     grad_W = hidden_states[:, 0, :].T @ grad_z
     grad_b = np.sum(grad_z, axis=0)
+    loss = -np.mean(np.log(probs[np.arange(batch_size), labels]))
 
     return {
         "new_classifier_W": classifier_W - learning_rate * grad_W,
