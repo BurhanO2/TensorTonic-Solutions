@@ -20,12 +20,12 @@ def sgns_sgd_step(W_in: torch.Tensor, W_out: torch.Tensor,
         center_grad = center_grad + coeff * output[neg_id]
         output_grad[neg_id] = output_grad.get(neg_id, torch.zeros_like(center)) + coeff * center
 
-    new_W_in[center_id] = new_W_in[center_id] - lr * center_grad
+    W_in[center_id] = W_in[center_id] - lr * center_grad
     
     for id, grad in output_grad.items():
-        new_W_out[id] = new_W_out[id] - lr * grad
+        W_out[id] = W_out[id] - lr * grad
 
     return {
-        "W_in": new_W_in,
-        "W_out": new_W_out
+        "W_in": W_in,
+        "W_out": W_out
     }
