@@ -21,14 +21,14 @@ def batch_norm_block(x, W1, W2, gamma1, beta1, gamma2, beta2, mode):
 
     if mode == "post":
         output = np.maximum(0, batch_norm(x @ W1, gamma1, beta1))
-        output = np.maximum(0, batch_norm(output @ W2, gamma2, beta2) + i)
+        output = np.maximum(0, batch_norm(output @ W2, gamma2, beta2) + x)
         return {
             "output": output,
             "mode": "post"
         }
     else:
         output = np.maximum(0, batch_norm(x, gamma1, beta1)) @ W1
-        output = np.maximum(0, batch_norm(output, gamma2, beta2)) @ W2 + i
+        output = np.maximum(0, batch_norm(output, gamma2, beta2)) @ W2 + x
         return {
             "output": output,
             "mode": "pre"
