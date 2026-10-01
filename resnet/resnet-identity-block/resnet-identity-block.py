@@ -9,5 +9,4 @@ def identity_block(x, W1, W2):
     W2 = np.array(W2, dtype=float)
     i = x.copy()
     out = np.maximum(0, x @ W1.T) @ W2.T
-    result = np.maximum(0, out + i)
-    return result
+    return np.maximum(0, out + i)
