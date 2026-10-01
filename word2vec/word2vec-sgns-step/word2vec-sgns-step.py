@@ -6,8 +6,6 @@ def sgns_sgd_step(W_in: torch.Tensor, W_out: torch.Tensor,
     """
     Returns updated W_in and W_out float64 tensors in a dictionary.
     """
-    new_W_in = W_in.clone()
-    new_W_out = W_out.clone()
     center = W_in[center_id].clone()
     output = W_out.clone()
 
