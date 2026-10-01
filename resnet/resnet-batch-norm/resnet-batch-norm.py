@@ -17,7 +17,6 @@ def batch_norm_block(x, W1, W2, gamma1, beta1, gamma2, beta2, mode):
     beta1 = np.array(beta1, dtype=float)
     gamma2 = np.array(gamma2, dtype=float)
     beta2 = np.array(beta2, dtype=float)
-    i = x.copy()
 
     if mode == "post":
         output = np.maximum(0, batch_norm(x @ W1, gamma1, beta1))
