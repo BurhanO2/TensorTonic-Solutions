@@ -19,7 +19,7 @@ def multi_head_attention(Q: np.ndarray, K: np.ndarray, V: np.ndarray,
     K = np.dot(K, W_k).reshape(batch_size, seq_len, num_heads, d_k).transpose(0, 2, 1, 3)
     V = np.dot(V, W_v).reshape(batch_size, seq_len, num_heads, d_k).transpose(0, 2, 1, 3)
 
-    scores = np.matmul(Q, K.transpose(0, 1, 3, 2)) / np.sqrt(d_k)
+    scores = Q @ K.transpose(0, 1, 3, 2) / np.sqrt(d_k)
     attention_output = np.matmul(softmax(scores), V)
     attention_output = attention_output.transpose(0, 2, 1, 3).reshape(batch_size, seq_len, d_model)
     return np.dot(attention_output, W_o)
