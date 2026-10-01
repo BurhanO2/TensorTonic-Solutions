@@ -10,4 +10,4 @@ def identity_block(x, W1, W2):
     i = x.copy()
     out = np.maximum(0, x @ W1.T) @ W2.T
     result = np.maximum(0, out + i)
-    return [[float(v) for v in r] for r in result]
+    return result
