@@ -40,6 +40,7 @@ Verified machine learning implementations completed on [TensorTonic](https://www
 | Differentiate a Tanh Activation | Evaluate scalar tanh and manually combine its local derivative with an upstream gradient. | https://www.tensortonic.com/problems/autograd-l04-tanh-forward-backward |
 | Apply Local Vector-Jacobian Rules | A reverse-mode autodiff engine moves an upstream scalar gradient through one operation at a time. | https://www.tensortonic.com/problems/autograd-l05-local-vjp-rules |
 | Topologically Sort a Computation DAG | Reverse-mode autodiff must process children before their parents during the backward pass. | https://www.tensortonic.com/problems/autograd-l05-topological-sort |
+| Train a Tiny Micrograd MLP | Train a supplied scalar-output MLP with manual reverse-mode differentiation and deterministic gradient descent. | https://www.tensortonic.com/problems/autograd-l08-train-tiny-micrograd-mlp |
 | Bag-of-Words Vector | Build a NumPy bag-of-words count vector from an ordered vocabulary while ignoring out-of-vocabulary tokens. | https://www.tensortonic.com/problems/bag-of-words |
 | Batch Shuffling & Mini-Batch Generator | Create shuffled mini-batches from NumPy feature and target arrays with reproducible ordering and final-batch handling. | https://www.tensortonic.com/problems/batch-generator |
 | Batch Normalization (Forward) | Implement the batch-normalization forward pass in NumPy using feature-wise statistics, scale, shift, and numerical stability. | https://www.tensortonic.com/problems/batch-normalization |
